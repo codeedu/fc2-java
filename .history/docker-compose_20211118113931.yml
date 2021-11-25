@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  fc_db:
+    image: "mysql:8.0"
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+      - MYSQL_DATABASE=fc_catalogo_dev
+      #- MYSQL_USER=root
+    # networks:
+    #   - fc_net
+    ports:
+      - 33060:3306  
+  fc_catalogo:
+    build:
+      context: ./
+      dockerfile: Dockerfile  
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: sh run.sh
+    ports:
+      - 8080:8080
+      - 8005:8005
+    depends_on:
+      - fc_db  
+  # fc_adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   networks:
+  #     - fc_net
+  #   depends_on:
+  #     - fc_db        
+
+# networks:
+#   fc_net:
+#     driver: bridge

@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  fc_mysqldb:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=fc_catalogo_dev
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
+    ports:
+      - 3307:3306
+  fc_catalogo:
+    build:
+      context: ./
+      dockerfile: Dockerfile  
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: sh run.sh
+    ports:
+      - 8080:8080
+      - 8005:8005
+    depends_on:
+      - fc_mysqldb  
+    networks:
+      - fc_network
+  # fc_adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8081:8081
+  #   networks:
+  #     - fc_net
+  #   depends_on:
+  #     - fc_db        
+
+networks:
+  fc_network:

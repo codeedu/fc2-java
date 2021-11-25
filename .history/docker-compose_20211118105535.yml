@@ -1,0 +1,36 @@
+version: '3.7'
+services:
+  fc_catalogo:
+    build:
+      context: ./
+      dockerfile: Dockerfile  
+    volumes:
+      - ./:/app
+    working_dir: /app
+    command: sh run.sh
+    ports:
+      - 8080:8080
+      - 8005:8005
+    depends_on:
+      - db  
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - spring
+    ports:
+      - 33060:3306
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8081
+    networks:
+      - spring
+
+networks:
+  spring:
+    driver: bridge
