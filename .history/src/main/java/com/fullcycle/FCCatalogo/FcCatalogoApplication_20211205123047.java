@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FcCatalogoApplication {
  
 	public static void main(String[] args) {
+		//tests
 		SpringApplication.run(FcCatalogoApplication.class, args);
 	}
 }

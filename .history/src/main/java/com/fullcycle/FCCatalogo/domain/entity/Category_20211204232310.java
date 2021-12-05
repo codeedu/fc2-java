@@ -16,7 +16,7 @@ public class Category extends BaseEntity {
     @Column
     private String name;
 
-    private Category() {}
+    public Category() {}
     
     public Category(String name) {
         super.generateUUID();
